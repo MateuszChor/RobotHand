@@ -64,6 +64,9 @@ void setup() {
   WiFi.begin(ssid, password);
   
   while (WiFi.status() != WL_CONNECTED) {
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("WiFi...");
     delay(1000);
     Serial.println("Connecting to WiFi...");
   }
@@ -90,11 +93,17 @@ void loop() {
     Serial.println("Connected to server");
     while (client.connected()) {
 
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("Connected to");
+      lcd.setCursor(0, 1);
+      lcd.print("Server");
+
       String line = client.readStringUntil('\n');
       line.trim(); 
       Serial.println(line);
       if (line == "Thumb_Up"){
-        S_Thumb.write(180);
+        S_Thumb.write(170);
         lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print(line);
@@ -110,7 +119,7 @@ void loop() {
       }
 
        if (line == "Forefinger_Up"){
-        S_Forefinger.write(180);
+        S_Forefinger.write(168);
         lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print(line);
@@ -118,7 +127,7 @@ void loop() {
       }
 
        if (line == "Forefinger_Down"){
-        S_Forefinger.write(0);
+        S_Forefinger.write(13);
         lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print(line);
@@ -188,6 +197,10 @@ void loop() {
     digitalWrite(ledPin_red, LOW);
     digitalWrite(ledPin_yellow, LOW);
     lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Server ");
+    lcd.setCursor(0, 1);
+    lcd.print("Connecting ....");
   }
   delay(1000);
   digitalWrite(ledPin_red, LOW);

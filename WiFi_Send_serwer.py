@@ -33,7 +33,7 @@ while True:
         conn.close()
         s.close()
 
-    if wybor == "2":
+    elif wybor == "2":
         # Wysyłanie danych przez gniazdo
         data = str('Thumb_Down')
         conn.sendall(data.encode())
@@ -41,7 +41,7 @@ while True:
         conn.close()
         s.close()
 
-    if wybor == "3":
+    elif wybor == "3":
         # Wysyłanie danych przez gniazdo
         data = str('Forefinger_Up')
         conn.sendall(data.encode())
@@ -49,7 +49,7 @@ while True:
         conn.close()
         s.close()
 
-    if wybor == "4":
+    elif wybor == "4":
         # Wysyłanie danych przez gniazdo
         data = str('Forefinger_Down')
         conn.sendall(data.encode())
@@ -57,7 +57,7 @@ while True:
         conn.close()
         s.close()
 
-    if wybor == "5":
+    elif wybor == "5":
         # Wysyłanie danych przez gniazdo
         data = str('Middle_Up')
         conn.sendall(data.encode())
@@ -65,7 +65,7 @@ while True:
         conn.close()
         s.close()
 
-    if wybor == "6":
+    elif wybor == "6":
         # Wysyłanie danych przez gniazdo
         data = str('Middle_Down')
         conn.sendall(data.encode())
@@ -73,7 +73,7 @@ while True:
         conn.close()
         s.close()
 
-    if wybor == "7":
+    elif wybor == "7":
         # Wysyłanie danych przez gniazdo
         data = str('Ring_finger_Up')
         conn.sendall(data.encode())
@@ -81,7 +81,7 @@ while True:
         conn.close()
         s.close()
 
-    if wybor == "8":
+    elif wybor == "8":
         # Wysyłanie danych przez gniazdo
         data = str('Ring_finger_Down')
         conn.sendall(data.encode())
@@ -89,7 +89,7 @@ while True:
         conn.close()
         s.close()
 
-    if wybor == "9":
+    elif wybor == "9":
         # Wysyłanie danych przez gniazdo
         data = str('Little_finger_Up')
         conn.sendall(data.encode())
@@ -97,7 +97,7 @@ while True:
         conn.close()
         s.close()
 
-    if wybor == "10":
+    elif wybor == "10":
         # Wysyłanie danych przez gniazdo
         data = str('Little_finger_Down')
         conn.sendall(data.encode())
@@ -105,6 +105,6 @@ while True:
         conn.close()
         s.close()
 
-    if wybor == "exit":
-        print("exit")
+    else:
+        print("exit")   
         break
