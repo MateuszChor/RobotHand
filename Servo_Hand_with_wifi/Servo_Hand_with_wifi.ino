@@ -95,6 +95,7 @@ void loop() {
       Serial.println(line);
       if (line == "Thumb_Up"){
         S_Thumb.write(180);
+        lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print(line);
         digitalWrite(ledPin_red, HIGH);
@@ -102,6 +103,7 @@ void loop() {
 
       if (line == "Thumb_Down"){
         S_Thumb.write(0);
+        lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print(line);
         digitalWrite(ledPin_red, HIGH);
@@ -109,6 +111,7 @@ void loop() {
 
        if (line == "Forefinger_Up"){
         S_Forefinger.write(180);
+        lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print(line);
         digitalWrite(ledPin_red, HIGH);
@@ -116,20 +119,23 @@ void loop() {
 
        if (line == "Forefinger_Down"){
         S_Forefinger.write(0);
+        lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print(line);
         digitalWrite(ledPin_red, HIGH);
       }
        
        if (line == "Middle_Up"){
-        S_Middle.write(0);
+        S_Middle_finger.write(180);
+        lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print(line);
         digitalWrite(ledPin_red, HIGH);
       }
 
        if (line == "Middle_Down"){
-        S_Middle.write(180);
+        S_Middle_finger.write(0);
+        lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print(line);
         digitalWrite(ledPin_red, HIGH);
@@ -137,7 +143,8 @@ void loop() {
       
        if (line == "Ring_finger_Up"){
         // this servo working another direction :) 
-        S_Ring_finger.write(180);
+        S_Ring_finger.write(0);
+        lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print(line);
         digitalWrite(ledPin_red, HIGH);
@@ -145,7 +152,8 @@ void loop() {
 
        if (line == "Ring_finger_Down"){
         // this servo working another direction :) 
-        S_Ring_finger.write(0);
+        S_Ring_finger.write(180);
+        lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print(line);
         digitalWrite(ledPin_red, HIGH);
@@ -153,7 +161,8 @@ void loop() {
 
        if (line == "Little_finger_Up"){
         // this servo working another direction :) 
-        S_Little_finger.write(0);
+        S_Little_finger.write(180);
+        lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print(line);
         digitalWrite(ledPin_red, HIGH);
@@ -161,7 +170,8 @@ void loop() {
 
        if (line == "Little_finger_Down"){
         // this servo working another direction :) 
-        S_Little_finger.write(180);
+        S_Little_finger.write(0);
+        lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print(line);
         digitalWrite(ledPin_red, HIGH);
@@ -171,13 +181,13 @@ void loop() {
     
     Serial.println();
     Serial.println("Disconnecting from server");
-    lcd.clear();
     client.stop();
   
   } else {
     Serial.println("Connection failed.");
     digitalWrite(ledPin_red, LOW);
     digitalWrite(ledPin_yellow, LOW);
+    lcd.clear();
   }
   delay(1000);
   digitalWrite(ledPin_red, LOW);
