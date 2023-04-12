@@ -5,6 +5,7 @@ import os
 from pathlib import Path
 import mediapipe as mp
 import time
+from WIFI_send_serwer import Server_motor
 
 BASE_DIR = Path(__file__).absolute().parent
 path_to_modules = os.path.join(BASE_DIR, "modules")
@@ -63,7 +64,10 @@ def get_video_from_esp32(url):
 
     detector = handDetector()
 
+    tipIds = [4, 8, 12, 16, 20]
+
     while True:
+
         # success, img = cap.read() # read from  camera hardware
         url_img = urllib.request.urlopen(url)  # open address url with url to camera
 
@@ -72,12 +76,41 @@ def get_video_from_esp32(url):
 
         img = detector.findHands(img)
         lmList = detector.findPosition(img)
-
         # Forefinger
         if len(lmList) != 0:
-            print(lmList[8])       # fingertip
+            server = Server_motor('', )
+            fingers = []
 
-            print(lmList[5])       # beginning finger
+            # Thumb
+            if lmList[tipIds[0]][1] > lmList[tipIds[0]-1][1]:
+                fingers.append(1)
+            else:
+                fingers.append(0)
+
+
+            for id in range(1, 5):
+                if lmList[tipIds[id]][2] < lmList[tipIds[id-2]][2]:
+                    fingers.append(1)
+                else:
+                    fingers.append(0)
+
+            print(fingers)
+
+            # forefinger
+            if fingers[0] == 1:
+                conn, addr = server.accept()
+                server.send(conn, 'Forefinger_Up')
+                server.close()
+
+            elif fingers[0] == 0:
+                conn, addr = server.accept()
+                server.send(conn, 'Forefinger_Down')
+                server.close()
+
+
+            # print(lmList[8])       # fingertip
+            #
+            # print(lmList[5])       # beginning finger
 
 
         # calculate fps
