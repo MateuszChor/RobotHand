@@ -1,5 +1,6 @@
 import socket
 
+
 HOST = '192.168.8.101'  # pusty string oznacza dowolny adres IP
 PORT = 80  # wybrany port
 
@@ -17,10 +18,23 @@ print(conn)
 
 print('Połączono z', addr)
 
-# Wysyłanie danych przez gniazdo
-data = str('two')
-conn.sendall(data.encode())
+wybor = input(" 1 = Thumb_Up ,  2 = Thumb_Down : ")
 
-# Zamykanie połączenia
-conn.close()
-s.close()
+if wybor == "1":
+    # Wysyłanie danych przez gniazdo
+    data = str('Thumb_Up')
+    conn.sendall(data.encode())
+    # Zamykanie połączenia
+    conn.close()
+    s.close()
+
+if wybor == "2":
+    # Wysyłanie danych przez gniazdo
+    data = str('Thumb_Down')
+    conn.sendall(data.encode())
+    # Zamykanie połączenia
+    conn.close()
+    s.close()
+
+else:
+    print("exit")

@@ -1,9 +1,14 @@
 #include <WiFi.h>
+#include <SECRET.h>
 
-const char* ssid = "";
-const char* password = "";
+extern const std::string seccret_password;
+extern const std::string seccret_ssid;
+extern const std::string seccret_ip_server;
 
-const char* server = "";
+const char* ssid = seccret_ssid.c_str();
+const char* password = seccret_password.c_str();
+
+const char* server = seccret_ip_server.c_str();
 const int port = 80;
 
 const int buttonPin = 34; 

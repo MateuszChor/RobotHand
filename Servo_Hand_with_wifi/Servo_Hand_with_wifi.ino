@@ -1,11 +1,15 @@
 #include <ESP32Servo.h>
 #include <LiquidCrystal_I2C.h>
 #include <WiFi.h>
+#include <SECRET.h>
 
-const char* ssid = "";
-const char* password = "";
+extern const std::string seccret_password;
+extern const std::string seccret_ssid;
+extern const std::string seccret_ip_server;
 
-const char* server = "";
+const char* ssid = seccret_ssid.c_str();
+const char* password = seccret_password.c_str();
+const char* server = seccret_ip_server.c_str();
 const int port = 80;
 
 const int buttonPin = 34; 
@@ -103,10 +107,71 @@ void loop() {
         digitalWrite(ledPin_red, HIGH);
       }
 
+       if (line == "Forefinger_Up"){
+        S_Forefinger.write(180);
+        lcd.setCursor(0, 0);
+        lcd.print(line);
+        digitalWrite(ledPin_red, HIGH);
+      }
+
+       if (line == "Forefinger_Down"){
+        S_Forefinger.write(0);
+        lcd.setCursor(0, 0);
+        lcd.print(line);
+        digitalWrite(ledPin_red, HIGH);
+      }
+       
+       if (line == "Middle_Up"){
+        S_Middle.write(0);
+        lcd.setCursor(0, 0);
+        lcd.print(line);
+        digitalWrite(ledPin_red, HIGH);
+      }
+
+       if (line == "Middle_Down"){
+        S_Middle.write(180);
+        lcd.setCursor(0, 0);
+        lcd.print(line);
+        digitalWrite(ledPin_red, HIGH);
+      }
+      
+       if (line == "Ring_finger_Up"){
+        // this servo working another direction :) 
+        S_Ring_finger.write(180);
+        lcd.setCursor(0, 0);
+        lcd.print(line);
+        digitalWrite(ledPin_red, HIGH);
+      }
+
+       if (line == "Ring_finger_Down"){
+        // this servo working another direction :) 
+        S_Ring_finger.write(0);
+        lcd.setCursor(0, 0);
+        lcd.print(line);
+        digitalWrite(ledPin_red, HIGH);
+      }
+
+       if (line == "Little_finger_Up"){
+        // this servo working another direction :) 
+        S_Little_finger.write(0);
+        lcd.setCursor(0, 0);
+        lcd.print(line);
+        digitalWrite(ledPin_red, HIGH);
+      }
+
+       if (line == "Little_finger_Down"){
+        // this servo working another direction :) 
+        S_Little_finger.write(180);
+        lcd.setCursor(0, 0);
+        lcd.print(line);
+        digitalWrite(ledPin_red, HIGH);
+      }
+    
     }
     
     Serial.println();
     Serial.println("Disconnecting from server");
+    lcd.clear();
     client.stop();
   
   } else {
@@ -120,31 +185,3 @@ void loop() {
 
 }
 
-  
-
-  //  if (buttonState == HIGH) {
-  //   digitalWrite(ledPin, HIGH);
-  //   pos = 180;
-  //   pos_Ring_finger = 0;
-  //   S_Wrist.write(0);
-  //   S_Thumb.write(pos);
-  //   S_Forefinger.write(pos);
-  //   S_Middle_finger.write(pos);
-  //   S_Ring_finger.write(pos_Ring_finger);
-  //   S_Little_finger.write(pos);
-  //   lcd.setCursor(0, 0);
-  //   lcd.print(buttonState);
-  
-  // } else {
-  //   digitalWrite(ledPin, LOW);
-  //   pos = 0;  
-  //   pos_Ring_finger = 180;    
-  //   S_Wrist.write(0);
-  //   S_Thumb.write(pos);
-  //   S_Forefinger.write(pos);
-  //   S_Middle_finger.write(pos);
-  //   S_Ring_finger.write(pos_Ring_finger);
-  //   S_Little_finger.write(pos);
-    
-  //   lcd.setCursor(0, 0);
-  //   lcd.print(buttonState);
