@@ -79,6 +79,9 @@ def get_video_from_esp32(url):
         # Forefinger
         if len(lmList) != 0:
             server = Server_motor('', )
+            server.start()
+
+
             fingers = []
 
             # Thumb
@@ -98,14 +101,12 @@ def get_video_from_esp32(url):
 
             # forefinger
             if fingers[0] == 1:
-                conn, addr = server.accept()
-                server.send(conn, 'Forefinger_Up')
-                server.close()
+                server.run_server
 
-            elif fingers[0] == 0:
-                conn, addr = server.accept()
-                server.send(conn, 'Forefinger_Down')
-                server.close()
+            # elif fingers[0] == 0:
+            #     conn, addr = server.accept()
+            #     server.send(conn, 'Forefinger_Down')
+            #     server.close()
 
 
             # print(lmList[8])       # fingertip
@@ -126,8 +127,61 @@ def get_video_from_esp32(url):
             break
 
     cv2.destroyAllWindows()
+    server.close()
 
 
-url = 'http://192.168.8.116/cam-hi.jpg'
+def video_from_device():
+    pTime = 0
+    cTime = 0
 
-get_video_from_esp32(url)
+    detector = handDetector()
+
+    tipIds = [4, 8, 12, 16, 20]
+
+    while True:
+
+        capture = cv2.VideoCapture(0)
+        ret, frame = capture.read()
+
+        img_np = np.array(bytearray(frame.read()), dtype=np.uint8)  # on matrix
+        img = cv2.imdecode(img_np, -1)  # cv2 flag -1 encoding original format
+
+        img = detector.findHands(img)
+        lmList = detector.findPosition(img)
+        # Forefinger
+        if len(lmList) != 0:
+            server = Server_motor('', )
+
+            fingers = []
+
+            # Thumb
+            if lmList[tipIds[0]][1] > lmList[tipIds[0] - 1][1]:
+                fingers.append(1)
+            else:
+                fingers.append(0)
+
+            for id in range(1, 5):
+                if lmList[tipIds[id]][2] < lmList[tipIds[id - 2]][2]:
+                    fingers.append(1)
+                else:
+                    fingers.append(0)
+
+            print(fingers)
+
+            # forefinger
+            if fingers[0] == 1:
+                print("palec o id 0 jest w na wartości 1")
+
+        cv2.imshow('Esp32Cam', img)
+        key = cv2.waitKey(5)
+        if key == ord('q'):
+            break
+
+    cv2.destroyAllWindows()
+    capture.release()
+
+
+
+# url = 'http://192.168.8.116/cam-hi.jpg'
+#
+# get_video_from_esp32(url)
