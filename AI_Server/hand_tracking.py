@@ -10,12 +10,6 @@ from WIFI_send_serwer import Server_motor
 BASE_DIR = Path(__file__).absolute().parent
 path_to_modules = os.path.join(BASE_DIR, "modules")
 
-red = (0,0,255)
-yellow = (0,255,255)
-blue = (255,0,0)
-green = (0,255,0)
-purple = (255,0,255)
-color = [red, yellow, blue, green, purple]
 
 class handDetector:
     # hand landmarks doc https://developers.google.com/mediapipe/solutions/vision/hand_landmarker
@@ -70,9 +64,8 @@ def get_video_from_esp32(url):
 
     detector = handDetector()
 
-    fingerTip = [4, 8, 12, 16, 20]
-    fingerVal = [0, 0, 0, 0, 0]
-    lastData = 00000
+    fingers = []
+    tipIds = [4, 8, 12, 16, 20]
 
     while True:
 
@@ -83,38 +76,27 @@ def get_video_from_esp32(url):
         img = cv2.imdecode(img_np, -1)  # cv2 flag -1 encoding original format
 
         img = detector.findHands(img)
-        lmList, bbox = detector.findPosition(img, 0, False)
-
+        lmList = detector.findPosition(img, 0, False)
+        # Forefinger
         if lmList:
-            # Thumb
+
             handType = detector.handType()
-            if handType == "Right":
-                if lmList[fingerTip[0]][0] > lmList[fingerTip[0] - 1][0]:
-                    fingerVal[0] = 1
-                else:
-                    fingerVal[0] = 0
+
+
+            # Thumb
+            if lmList[tipIds[0]][0] > lmList[tipIds[0]-1][0]:
+                fingers.append(1)
             else:
-                if lmList[fingerTip[0]][0] < lmList[fingerTip[0] - 1][0]:
-                    fingerVal[0] = 1
-                else:
-                    fingerVal[0] = 0
+                fingers.append(0)
 
-            # 4 fingers
+
             for i in range(1, 5):
-                if lmList[fingerTip[i]][1] < lmList[fingerTip[i] - 2][1]:
-                    fingerVal[i] = 1
+                if lmList[tipIds[i]][2] < lmList[tipIds[i-2]][2]:
+                    fingers.append(1)
                 else:
-                    fingerVal[i] = 0
+                    fingers.append(0)
 
-            # Draw mark
-            for i in range(0, 5):
-                if fingerVal[i] == 1:
-                    cv2.circle(img, (lmList[fingerTip[i]][0], lmList[fingerTip[i]][1]), 15,
-                               color[i], cv2.FILLED)
-
-            strVal = str(fingerVal[0]) + str(fingerVal[1]) + str(fingerVal[2]) + str(fingerVal[3]) + str(fingerVal[4])
-
-
+            print(fingers)
 
             # forefinger
             # if fingers[0] == 1:
@@ -144,7 +126,7 @@ def get_video_from_esp32(url):
             break
 
     cv2.destroyAllWindows()
-    # server.close()
+
 
 
 def video_from_device():
