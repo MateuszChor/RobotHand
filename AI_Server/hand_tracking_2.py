@@ -43,6 +43,7 @@ while cap.isOpened():
 
     display_thread = DisplayThread(img)
     display_thread.start()
+    display_thread.join()
 
     if lmList:
         handType = detector.handType()
