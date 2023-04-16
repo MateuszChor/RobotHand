@@ -12,6 +12,10 @@ class DisplayThread(threading.Thread):
     def run(self):
         cv2.imshow("Frame", self.frame)
         cv2.waitKey(1)
+        while key != 27:  # czekaj na naciśnięcie klawisza ESC
+            key = cv2.waitKey(1)
+        cv2.destroyAllWindows()
+
 
 cap = cv2.VideoCapture(0)
 
