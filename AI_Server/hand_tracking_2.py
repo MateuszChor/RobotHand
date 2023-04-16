@@ -38,21 +38,16 @@ while cap.isOpened():
         if handType == "Right":
             if lmList[fingerTip[0]][0] > lmList[fingerTip[0]-1][0]:
                 servo_server.send(conn, "Thumb_Up")
-                conn.close()
-                servo_server.close()
+
             else:
                 servo_server.send(conn, "Thumb_Down")
-                conn.close()
-                servo_server.close()
+
         else:
             if lmList[fingerTip[0]][0] < lmList[fingerTip[0]-1][0]:
                 servo_server.send(conn, "Thumb_Up")
-                conn.close()
-                servo_server.close()
+
             else:
                 servo_server.send(conn, "Thumb_Down")
-                conn.close()
-                servo_server.close()
 
                 #4 fingers
         for i in range(1, 5):
@@ -68,5 +63,8 @@ while cap.isOpened():
                            color[i], cv2.FILLED)
 
         strVal = str(fingerVal[0])+str(fingerVal[1])+str(fingerVal[2])+str(fingerVal[3])+str(fingerVal[4])
+
+    conn.close()
+    servo_server.close()
 
 cv2.destroyAllWindows()

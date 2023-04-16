@@ -1,6 +1,6 @@
 .idea
 AI_Server/__pycache__
-Secret\Secret.py
 Servo_Hand_with_wifi/Servo_Hand_with_wifi.ino
 Secret/__pycache__/Secret.cpython-310.pyc
 Secret/__pycache__/Secret.cpython-39.pyc
+Secret/Secret.py
