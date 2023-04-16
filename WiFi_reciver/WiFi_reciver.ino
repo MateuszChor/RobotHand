@@ -4,6 +4,7 @@
 extern const std::string seccret_password;
 extern const std::string seccret_ssid;
 extern const std::string seccret_ip_server;
+extern const std::string seccret_ip_server_laptop;
 
 const char* ssid = seccret_ssid.c_str();
 const char* password = seccret_password.c_str();

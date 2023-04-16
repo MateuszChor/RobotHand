@@ -1,6 +1,7 @@
 import cv2
 from cvzone.HandTrackingModule import HandDetector
 from WIFI_send_serwer import Server_motor
+from Secret.Secret import serwer_ip, serwer_ip_laptop, ip_esp
 
 cap = cv2.VideoCapture(0)
 
@@ -17,7 +18,10 @@ green = (0, 255, 0)
 purple = (255, 0, 255)
 
 color = [red, yellow, blue, green, purple]
-servo_motor = Server_motor("192.168.8.116", 80)
+
+servo_server = Server_motor(serwer_ip, 80)
+conn, addr = servo_server.accept()
+
 
 while cap.isOpened():
     success, img = cap.read()
@@ -29,17 +33,25 @@ while cap.isOpened():
         handType = detector.handType()
         if handType == "Right":
             if lmList[fingerTip[0]][0] > lmList[fingerTip[0]-1][0]:
-                servo_motor.send("Thumb_Up")
+                servo_server.send("Thumb_Up")
+                conn.close()
+                servo_server.close()
             else:
-                servo_motor.send("Thumb_Down")
+                servo_server.send("Thumb_Down")
+                conn.close()
+                servo_server.close()
         else:
             if lmList[fingerTip[0]][0] < lmList[fingerTip[0]-1][0]:
-                servo_motor.send("Thumb_Up")
+                servo_server.send("Thumb_Up")
+                conn.close()
+                servo_server.close()
             else:
-                servo_motor.send("Thumb_Down")
+                servo_server.send("Thumb_Down")
+                conn.close()
+                servo_server.close()
 
-        #4 fingers
-        for i in range(1,5):
+                #4 fingers
+        for i in range(1, 5):
             if lmList[fingerTip[i]][1] < lmList[fingerTip[i]-2][1]:
                 fingerVal[i] = 1
             else:

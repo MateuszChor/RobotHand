@@ -1,2 +1,4 @@
 .idea
 AI_Server/__pycache__
+Secret\Secret.py
+Servo_Hand_with_wifi/Servo_Hand_with_wifi.ino
