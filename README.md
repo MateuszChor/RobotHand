@@ -14,7 +14,7 @@ Robot hand controlled by servo motors and esp32
 ![IMG_20230416_201535](https://user-images.githubusercontent.com/79656363/232335114-bb5cd555-6044-438d-848a-6d95ec7a365d.jpg)
 
 
-# When esp receives data, it lights up the red LED for a second and shows communicat on lcd and moves sevro motor mentioned in the communicat
+# When esp receives data, it lights up the red LED for a second and shows recived communicat on lcd and moves sevro motor mentioned in the communicat
 ![IMG_20230416_202840](https://user-images.githubusercontent.com/79656363/232335195-f333939c-2046-430b-bddf-cbe115ede9fa.jpg)
 
 
