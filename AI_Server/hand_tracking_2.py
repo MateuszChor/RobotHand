@@ -2,6 +2,16 @@ import cv2
 from cvzone.HandTrackingModule import HandDetector
 from WIFI_send_serwer import Server_motor
 from Secret.Secret import serwer_ip, serwer_ip_laptop, ip_esp
+import threading
+
+class DisplayThread(threading.Thread):
+    def __init__(self, frame):
+        threading.Thread.__init__(self)
+        self.frame = frame
+
+    def run(self):
+        cv2.imshow("Frame", self.frame)
+        cv2.waitKey(1)
 
 cap = cv2.VideoCapture(0)
 
@@ -28,16 +38,18 @@ while cap.isOpened():
     img = detector.findHands(img)
     lmList, bbox = detector.findPosition(img)
 
-    cv2.imshow("Image", img)
-    key = cv2.waitKey(1)
-    if key == ord('q'):
+    if not success:
         break
 
-    if lmList:
+    display_thread = DisplayThread(img)
+    display_thread.start()
 
-        # Thumb
+    if lmList:
         handType = detector.handType()
+
+        # right hand
         if handType == "Right":
+            # Thumb
             if lmList[fingerTip[0]][0] > lmList[fingerTip[0]-1][0]:
                 thumb_up = True
                 if thumb_down:
@@ -50,12 +62,15 @@ while cap.isOpened():
                     servo_server.send(conn, "Thumb_Down")
                     thumb_up = False
 
+
+        # left hand
         else:
             if lmList[fingerTip[0]][0] < lmList[fingerTip[0]-1][0]:
                 servo_server.send(conn, "Thumb_Up")
 
             else:
                 servo_server.send(conn, "Thumb_Down")
+
 
                 #4 fingers
         for i in range(1, 5):
@@ -75,4 +90,5 @@ while cap.isOpened():
     conn.close()
     servo_server.close()
 
+cap.release()
 cv2.destroyAllWindows()
