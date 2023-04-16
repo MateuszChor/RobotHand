@@ -60,28 +60,28 @@ while cap.isOpened():
                     servo_server.send(conn, "Thumb_Down")
                     thumb_up = False
 
-            # Right Forefinger
-            if lmList[fingerTip[1]][1] < lmList[fingerTip[1] - 2][1]:
-                forefinger_up = True
-                if forefinger_down:
-                    servo_server.send(conn, 'Forefinger_Up')
-                    forefinger_down = False
-                else:
-                    forefinger_down = True
-                    if forefinger_up:
-                        servo_server.send(conn, 'Forefinger_Down')
-                        forefinger_up = False
-
-            if lmList[fingerTip[2]][1] < lmList[fingerTip[2] - 2][1]:
-                middlefinger_up = True
-                if middlefinger_down:
-                    servo_server.send(conn, 'Middle_Up')
-                    middlefinger_down = False
-                else:
-                    middlefinger_down = True
-                    if middlefinger_up:
-                        servo_server.send(conn, 'Middle_Down')
-                        middlefinger_up = False
+            # # Right Forefinger
+            # if lmList[fingerTip[1]][1] < lmList[fingerTip[1] - 2][1]:
+            #     forefinger_up = True
+            #     if forefinger_down:
+            #         servo_server.send(conn, 'Forefinger_Up')
+            #         forefinger_down = False
+            #     else:
+            #         forefinger_down = True
+            #         if forefinger_up:
+            #             servo_server.send(conn, 'Forefinger_Down')
+            #             forefinger_up = False
+            #
+            # if lmList[fingerTip[2]][1] < lmList[fingerTip[2] - 2][1]:
+            #     middlefinger_up = True
+            #     if middlefinger_down:
+            #         servo_server.send(conn, 'Middle_Up')
+            #         middlefinger_down = False
+            #     else:
+            #         middlefinger_down = True
+            #         if middlefinger_up:
+            #             servo_server.send(conn, 'Middle_Down')
+            #             middlefinger_up = False
 
             #     # 4 fingers
             # for i in range(1, 5):
