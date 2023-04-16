@@ -21,6 +21,7 @@ class ProcessThread(threading.Thread):
         threading.Thread.__init__(self)
         self.cap = cap
         self.lock = lock
+        self.frame = None
 
     def run(self):
         while True:
