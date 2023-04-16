@@ -1,5 +1,5 @@
 # RobotHand
-Robot hand controlled by servo motors and esp32
+Robot hand controlled by servo motors with esp32 and computer vison cvzone and openCV
 
 
 https://user-images.githubusercontent.com/79656363/232337019-345444e4-cf23-4a8a-8770-4a82a7e542ec.mp4
