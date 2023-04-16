@@ -21,6 +21,8 @@ color = [red, yellow, blue, green, purple]
 
 
 while cap.isOpened():
+    servo_server = Server_motor(serwer_ip_laptop, 80)
+    conn, addr = servo_server.accept()
     success, img = cap.read()
     img = detector.findHands(img)
     lmList, bbox = detector.findPosition(img)
@@ -31,8 +33,7 @@ while cap.isOpened():
         break
 
     if lmList:
-        servo_server = Server_motor(serwer_ip_laptop, 80)
-        conn, addr = servo_server.accept()
+
         # Thumb
         handType = detector.handType()
         if handType == "Right":
