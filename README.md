@@ -2,6 +2,10 @@
 Robot hand controlled by servo motors and esp32
 
 
+https://user-images.githubusercontent.com/79656363/232337019-345444e4-cf23-4a8a-8770-4a82a7e542ec.mp4
+
+
+
 # Esp blinks one time with LED and shows comunicat that starts connecting to wifi 
 ![IMG_20230416_201151](https://user-images.githubusercontent.com/79656363/232334487-1fffe64a-1557-40ba-a3aa-dee8c9c94762.jpg)
 
