@@ -18,7 +18,8 @@ green = (0, 255, 0)
 purple = (255, 0, 255)
 
 color = [red, yellow, blue, green, purple]
-
+thumb_up = True
+thumb_down = True
 
 while cap.isOpened():
     servo_server = Server_motor(serwer_ip_laptop, 80)
@@ -38,10 +39,16 @@ while cap.isOpened():
         handType = detector.handType()
         if handType == "Right":
             if lmList[fingerTip[0]][0] > lmList[fingerTip[0]-1][0]:
-                servo_server.send(conn, "Thumb_Up")
+                thumb_up = True
+                if thumb_down:
+                    servo_server.send(conn, "Thumb_Up")
+                    thumb_down = False
 
             else:
-                servo_server.send(conn, "Thumb_Down")
+                thumb_down = True
+                if thumb_up:
+                    servo_server.send(conn, "Thumb_Down")
+                    thumb_up = False
 
         else:
             if lmList[fingerTip[0]][0] < lmList[fingerTip[0]-1][0]:
