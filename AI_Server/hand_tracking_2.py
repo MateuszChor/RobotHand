@@ -84,12 +84,12 @@ while cap.isOpened():
                 servo_server.send(conn, 'Forefinger_Up')
                 forefinger_down = False
                 print('Forefinger_Up')
-            else:
-                forefinger_down = True
-                if forefinger_up:
-                    servo_server.send(conn, 'Forefinger_Down')
-                    forefinger_up = False
-                    print('Forefinger_Down')
+        else:
+            forefinger_down = True
+            if forefinger_up:
+                servo_server.send(conn, 'Forefinger_Down')
+                forefinger_up = False
+                print('Forefinger_Down')
 
         # Middle Finger
         if lmList[fingerTip[2]][1] < lmList[fingerTip[2] - 2][1]:
@@ -97,11 +97,11 @@ while cap.isOpened():
             if middlefinger_down:
                 servo_server.send(conn, 'Middle_Up')
                 middlefinger_down = False
-            else:
-                middlefinger_down = True
-                if middlefinger_up:
-                    servo_server.send(conn, 'Middle_Down')
-                    middlefinger_up = False
+        else:
+            middlefinger_down = True
+            if middlefinger_up:
+                servo_server.send(conn, 'Middle_Down')
+                middlefinger_up = False
 
         # Ring Finger
         if lmList[fingerTip[3]][1] < lmList[fingerTip[3] - 2][1]:
@@ -109,11 +109,11 @@ while cap.isOpened():
             if ringfinger_down:
                 servo_server.send(conn, 'Ring_finger_Up')
                 ringfinger_down = False
-            else:
-                ringfinger_down = True
-                if ringfinger_up:
-                    servo_server.send(conn, 'Ring_finger_Down')
-                    ringfinger_up = False
+        else:
+            ringfinger_down = True
+            if ringfinger_up:
+                servo_server.send(conn, 'Ring_finger_Down')
+                ringfinger_up = False
 
 
         # Little Finger
@@ -122,11 +122,11 @@ while cap.isOpened():
             if littlefinger_up:
                 servo_server.send(conn, 'Little_finger_Up')
                 littlefinger_down = False
-            else:
-                littlefinger_down = True
-                if littlefinger_up:
-                    servo_server.send(conn, 'Little_finger_Down')
-                    littlefinger_up = False
+        else:
+            littlefinger_down = True
+            if littlefinger_up:
+                servo_server.send(conn, 'Little_finger_Down')
+                littlefinger_up = False
 
         #     # 4 fingers
         # for i in range(1, 5):
