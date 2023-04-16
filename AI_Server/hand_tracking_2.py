@@ -83,11 +83,13 @@ while cap.isOpened():
             if forefinger_down:
                 servo_server.send(conn, 'Forefinger_Up')
                 forefinger_down = False
+                print('Forefinger_Up')
             else:
                 forefinger_down = True
                 if forefinger_up:
                     servo_server.send(conn, 'Forefinger_Down')
                     forefinger_up = False
+                    print('Forefinger_Down')
 
         # Middle Finger
         if lmList[fingerTip[2]][1] < lmList[fingerTip[2] - 2][1]:
