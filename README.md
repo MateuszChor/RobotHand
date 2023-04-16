@@ -1,6 +1,6 @@
 # RobotHand
 Robot hand controlled by servo motors and esp32
-![IMG_20230409_134159](https://user-images.githubusercontent.com/79656363/232335004-cd1dfdd8-887f-4119-94cc-eb8bc0d06b9a.jpg)
+
 
 # Esp blinks one time with LED and shows comunicat that starts connecting to wifi 
 ![IMG_20230416_201151](https://user-images.githubusercontent.com/79656363/232334487-1fffe64a-1557-40ba-a3aa-dee8c9c94762.jpg)
