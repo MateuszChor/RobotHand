@@ -5,7 +5,7 @@ from Secret.Secret import serwer_ip, serwer_ip_laptop, ip_esp
 
 cap = cv2.VideoCapture(0)
 
-detector = HandDetector(detectionCon=0.8, maxHands=1)
+detector = HandDetector(detectionCon=1, maxHands=1)
 
 fingerTip = [4, 8, 12, 16, 20]
 fingerVal = [0, 0, 0, 0, 0]
@@ -19,34 +19,41 @@ purple = (255, 0, 255)
 
 color = [red, yellow, blue, green, purple]
 
-servo_server = Server_motor(serwer_ip, 80)
-conn, addr = servo_server.accept()
-
 
 while cap.isOpened():
     success, img = cap.read()
-    img - detector.findHands(img)
-    lmList, bbox = detector.findPosition(img, draw=False)
+    img = detector.findHands(img)
+    lmList, bbox = detector.findPosition(img)
+
+    cv2.imshow("Image", img)
+    key = cv2.waitKey(1)
+    if key == ord('q'):
+        break
 
     if lmList:
+        servo_server = Server_motor(serwer_ip_laptop, 80)
+        conn, addr = servo_server.accept()
         # Thumb
         handType = detector.handType()
         if handType == "Right":
             if lmList[fingerTip[0]][0] > lmList[fingerTip[0]-1][0]:
-                servo_server.send("Thumb_Up")
+                servo_server.send(conn, "Thumb_Up")
                 conn.close()
                 servo_server.close()
             else:
-                servo_server.send("Thumb_Down")
+                conn, addr = servo_server.accept()
+                servo_server.send(conn, "Thumb_Down")
                 conn.close()
                 servo_server.close()
         else:
             if lmList[fingerTip[0]][0] < lmList[fingerTip[0]-1][0]:
-                servo_server.send("Thumb_Up")
+                conn, addr = servo_server.accept()
+                servo_server.send(conn, "Thumb_Up")
                 conn.close()
                 servo_server.close()
             else:
-                servo_server.send("Thumb_Down")
+                conn, addr = servo_server.accept()
+                servo_server.send(conn, "Thumb_Down")
                 conn.close()
                 servo_server.close()
 
@@ -64,12 +71,5 @@ while cap.isOpened():
                            color[i], cv2.FILLED)
 
         strVal = str(fingerVal[0])+str(fingerVal[1])+str(fingerVal[2])+str(fingerVal[3])+str(fingerVal[4])
-
-
-
-    cv2.imshow("Image", img)
-    key = cv2.waitKey(1)
-    if key == ord('q'):
-        break
 
 cv2.destroyAllWindows()
