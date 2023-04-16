@@ -16,8 +16,28 @@ class DisplayThread(threading.Thread):
             key = cv2.waitKey(1)
         cv2.destroyAllWindows()
 
+class ProcessThread(threading.Thread):
+    def __init__(self, cap, lock):
+        threading.Thread.__init__(self)
+        self.cap = cap
+        self.lock = lock
+
+    def run(self):
+        while True:
+            ret, frame = self.cap.read()
+            if not ret:
+                break
+            with self.lock:
+                self.frame = frame
+
+    def get_frame(self):
+        with self.lock:
+            return self.frame
 
 cap = cv2.VideoCapture(0)
+lock = threading.Lock()
+process_thread = ProcessThread(cap, lock)
+process_thread.start()
 
 detector = HandDetector(detectionCon=1, maxHands=1)
 
@@ -36,13 +56,15 @@ thumb_up = True
 thumb_down = True
 
 while cap.isOpened():
+    frame = process_thread.get_frame()
+
     servo_server = Server_motor(serwer_ip_laptop, 80)
     conn, addr = servo_server.accept()
     success, img = cap.read()
     img = detector.findHands(img)
     lmList, bbox = detector.findPosition(img)
 
-    if not success:
+    if frame is None:
         break
 
     display_thread = DisplayThread(img)
@@ -51,6 +73,7 @@ while cap.isOpened():
 
     if lmList:
         handType = detector.handType()
+        print(handType)
 
         # right hand
         if handType == "Right":
@@ -67,6 +90,12 @@ while cap.isOpened():
                     servo_server.send(conn, "Thumb_Down")
                     thumb_up = False
 
+            # 4 fingers
+            for i in range(1, 5):
+                if lmList[fingerTip[i]][1] < lmList[fingerTip[i] - 2][1]:
+                    fingerVal[i] = 1
+                else:
+                    fingerVal[i] = 0
 
         # left hand
         else:
@@ -76,13 +105,12 @@ while cap.isOpened():
             else:
                 servo_server.send(conn, "Thumb_Down")
 
-
-                #4 fingers
-        for i in range(1, 5):
-            if lmList[fingerTip[i]][1] < lmList[fingerTip[i]-2][1]:
-                fingerVal[i] = 1
-            else:
-                fingerVal[i] = 0
+            # 4 fingers
+            for i in range(1, 5):
+                if lmList[fingerTip[i]][1] > lmList[fingerTip[i] - 2][1]:
+                    fingerVal[i] = 1
+                else:
+                    fingerVal[i] = 0
 
         #Draw mark
         for i in range(0, 5):
@@ -95,5 +123,5 @@ while cap.isOpened():
     conn.close()
     servo_server.close()
 
+process_thread.join()
 cap.release()
-cv2.destroyAllWindows()
