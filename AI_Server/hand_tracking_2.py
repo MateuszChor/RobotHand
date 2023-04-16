@@ -119,7 +119,7 @@ while cap.isOpened():
         # Little Finger
         if lmList[fingerTip[4]][1] < lmList[fingerTip[4] - 2][1]:
             littlefinger_up = True
-            if littlefinger_up:
+            if littlefinger_down:
                 servo_server.send(conn, 'Little_finger_Up')
                 littlefinger_down = False
         else:
