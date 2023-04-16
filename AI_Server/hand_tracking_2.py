@@ -41,18 +41,15 @@ while cap.isOpened():
                 conn.close()
                 servo_server.close()
             else:
-                conn, addr = servo_server.accept()
                 servo_server.send(conn, "Thumb_Down")
                 conn.close()
                 servo_server.close()
         else:
             if lmList[fingerTip[0]][0] < lmList[fingerTip[0]-1][0]:
-                conn, addr = servo_server.accept()
                 servo_server.send(conn, "Thumb_Up")
                 conn.close()
                 servo_server.close()
             else:
-                conn, addr = servo_server.accept()
                 servo_server.send(conn, "Thumb_Down")
                 conn.close()
                 servo_server.close()

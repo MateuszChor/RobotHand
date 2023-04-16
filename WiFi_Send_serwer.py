@@ -1,7 +1,7 @@
 import socket
 from Secret.Secret import serwer_ip, serwer_ip_laptop
 
-HOST = serwer_ip  # pusty string oznacza dowolny adres IP
+HOST = serwer_ip_laptop  # pusty string oznacza dowolny adres IP
 PORT = 80  # wybrany port
 
 
