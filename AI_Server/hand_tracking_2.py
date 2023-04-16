@@ -78,7 +78,7 @@ while cap.isOpened():
 
 
         # Forefinger
-        if lmList[fingerTip[2]][1] < lmList[fingerTip[2] - 2][1]:
+        if lmList[fingerTip[1]][1] < lmList[fingerTip[1] - 2][1]:
             forefinger_up = True
             if forefinger_down:
                 servo_server.send(conn, 'Forefinger_Up')
@@ -90,7 +90,7 @@ while cap.isOpened():
                     forefinger_up = False
 
         # Middle Finger
-        if lmList[fingerTip[3]][1] < lmList[fingerTip[3] - 2][1]:
+        if lmList[fingerTip[2]][1] < lmList[fingerTip[2] - 2][1]:
             middlefinger_up = True
             if middlefinger_down:
                 servo_server.send(conn, 'Middle_Up')
@@ -102,7 +102,7 @@ while cap.isOpened():
                     middlefinger_up = False
 
         # Ring Finger
-        if lmList[fingerTip[4]][1] < lmList[fingerTip[4] - 2][1]:
+        if lmList[fingerTip[3]][1] < lmList[fingerTip[3] - 2][1]:
             ringfinger_up = True
             if ringfinger_down:
                 servo_server.send(conn, 'Ring_finger_Up')
@@ -115,7 +115,7 @@ while cap.isOpened():
 
 
         # Little Finger
-        if lmList[fingerTip[5]][1] < lmList[fingerTip[5] - 2][1]:
+        if lmList[fingerTip[4]][1] < lmList[fingerTip[4] - 2][1]:
             littlefinger_up = True
             if littlefinger_up:
                 servo_server.send(conn, 'Little_finger_Up')
