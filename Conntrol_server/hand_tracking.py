@@ -1,6 +1,6 @@
 import cv2
 from cvzone.HandTrackingModule import HandDetector
-from WIFI_send_serwer import Server_motor
+from MotorServer import server
 from Secret.Secret import serwer_ip, serwer_ip_laptop, ip_esp
 
 cap = cv2.VideoCapture(0)
@@ -30,7 +30,7 @@ littlefinger_up = True
 littlefinger_down = True
 
 while cap.isOpened():
-    servo_server = Server_motor(serwer_ip_laptop, 80)
+    servo_server = server(serwer_ip_laptop, 80)
     conn, addr = servo_server.accept()
     success, img = cap.read()
     img = detector.findHands(img)

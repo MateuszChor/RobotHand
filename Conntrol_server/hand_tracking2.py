@@ -1,5 +1,7 @@
 import cv2
 from cvzone.HandTrackingModule import HandDetector
+from MotorServer import server
+from Secret.Secret import serwer_ip, serwer_ip_laptop, ip_esp
 
 cap = cv2.VideoCapture(0)
 
@@ -7,18 +9,13 @@ detector = HandDetector(detectionCon=1, maxHands=1)
 
 fingerTip = [4, 8, 12, 16, 20]
 fingerVal = [0, 0, 0, 0, 0]
-lastData = 00000
-
-red = (0, 0, 255)
-yellow = (0, 255, 255)
-blue = (255, 0, 0)
-green = (0, 255, 0)
-purple = (255, 0, 255)
-
-color = [red, yellow, blue, green, purple]
-
+strVal = "11111"
+lastData = "00000"
 
 while cap.isOpened():
+
+    Server = server(serwer_ip_laptop, 80)
+    conn, addr = Server.accept()
     success, img = cap.read()
     img = detector.findHands(img)
     lmList, bbox = detector.findPosition(img)
@@ -31,13 +28,12 @@ while cap.isOpened():
     if lmList:
         handType = detector.handType()
 
-        print(handType)
-
         # Right hand
         if handType == "Right":
             # Right Thumb
             if lmList[fingerTip[0]][0] > lmList[fingerTip[0]-1][0]:
                 fingerVal[0] = 1
+
             else:
                 fingerVal[0] = 0
 
@@ -49,23 +45,17 @@ while cap.isOpened():
                 else:
                     fingerVal[i] = 0
 
-
-        # Left hand
         else:
-            # Left Thumb
-            if lmList[fingerTip[0]][0] < lmList[fingerTip[0]-1][0]:
-                fingerVal[0] = 1
-            else:
-                fingerVal[0] = 0
-
-        print(fingerVal)
-
-
-        #Draw mark
-        for i in range(0, 5):
-            if fingerVal[i] == 1:
-                cv2.circle(img, (lmList[fingerTip[i]][0], lmList[fingerTip[i]][1]), 15,
-                           color[i], cv2.FILLED)
+            print("Use your right hand !")
 
         strVal = str(fingerVal[0])+str(fingerVal[1])+str(fingerVal[2])+str(fingerVal[3])+str(fingerVal[4])
+
+        if lastData != strVal:
+            Server.send(strVal)
+            lastData = strVal
+        # TODO add methods to v on esp side
+
+    conn.close()
+    Server.close()
+
 cv2.destroyAllWindows()

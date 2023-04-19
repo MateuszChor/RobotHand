@@ -1,16 +1,13 @@
 import socket
 
-class Server_motor:
+class server:
 
     def __init__(self, ip, port):
         self.HOST = ip
         self.PORT = port
-        # Tworzenie gniazda sieciowego
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.bind((self.HOST, self.PORT))
         self.socket.listen(1)
-
-        print('Serwer nasłuchuje na porcie', self.PORT)
 
     def accept(self):
         conn, addr = self.socket.accept()

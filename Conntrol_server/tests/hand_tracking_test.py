@@ -5,10 +5,10 @@ import os
 from pathlib import Path
 import mediapipe as mp
 import time
-from WIFI_send_serwer import Server_motor
+from MotorServer import Server_motor
 
 BASE_DIR = Path(__file__).absolute().parent
-path_to_modules = os.path.join(BASE_DIR, "modules")
+path_to_modules = os.path.join(BASE_DIR, "../modules")
 
 
 class handDetector:
